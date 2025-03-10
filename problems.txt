@@ -1,0 +1,23 @@
+#problem 1
+select * from City
+where countrycode='USA' and population>100000
+
+
+#problem 2
+
+select name from employee
+order by name 
+
+#problem 3
+# Write your MySQL query statement below
+select tweet_id from Tweets
+where length(content)>15
+
+
+#problem 4
+UPDATE Salary
+SET sex = case 
+        when sex='m' then'f'
+        when sex='f' then'm'
+    END;
+
