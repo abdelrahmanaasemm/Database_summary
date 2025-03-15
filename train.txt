@@ -1,0 +1,27 @@
+use CarSalesDB
+
+
+
+  -- Find the average price of cars in the dataset.
+  --  Calculate the number of cars with leather interior that are cheaper than $1400.
+  -- Get the maximum price of Toyota cars produced in 2011.
+  -- Sort the car manufacturers according to the average price of their cars descendingly.
+  -- Calculate the percentage of cars that use petrol fuel only among cars with category Jeep.
+  --  Find the cheapest car(s) in the dataset. (If multiple cars have the same lowest price, return all of them.)
+  -- Find the percentage of Toyota cars that are above the average price of all cars.
+	select avg(price) from train
+
+	select count(*) from train where leather_interior =1 and price<1400;
+
+	select max(price) from train where Manufacturer= 'Toyota' and prod_year=2011;
+
+	select Manufacturer, avg(price) as avg_price from train 
+	group by Manufacturer
+	order by avg(price) DesC;
+ 
+	select	((select count(*) from train where Category='Jeep' and Fuel_type ='Petrol') *1.0 /(select count(*) from train where Category='Jeep'))
+	
+	select id, price ,manufacturer from train 
+	where price= (select min (price )from train)
+
+	select(((select count(*) from train where Manufacturer= 'Toyota'and price>(select avg(price) from train))*1.0 /(select count(*) from train)));

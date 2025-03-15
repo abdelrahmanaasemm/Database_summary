@@ -1,0 +1,54 @@
+--511. Game Play Analysis I
+
+# Write your MySQL query statement below
+select player_id ,min(event_date) as  first_login 
+from Activity
+group by player_id
+
+--department-highest-salary
+
+# Write your MySQL query statement below
+select Department.name as Department ,Employee.name as Employee, Employee.salary as Salary
+from Employee join Department
+on Department.id=Employee.departmentId
+where  Employee.salary  =(select max(Employee.salary)from Employee where Department.id = Employee.departmentId)
+ 
+
+
+--customers-who-never-order
+
+# Write your MySQL query statement below
+select c.name  as "Customers" ,o.id,c.id
+from Orders as o right join Customers as c 
+on c.id = o.customerId
+where o.customerId  is null;
+
+--rising-temperature
+select w.id
+FROM Weather w
+JOIN Weather w1 
+ON DATEDIFF(w.recordDate, w1.recordDate) = 1
+WHERE w.temperature > w1.temperature;
+
+--confirmation-rate
+# Write your MySQL query statement below
+select s.user_id as 'user_id' ,ifnull((avg(action='confirmed')),0)as confirmation_rate
+from Signups s left join Confirmations c
+ on c.user_id = s.user_id
+group by s.user_id
+
+
+--The Report
+select 
+    case
+        when g.grade >= 8 then s.name 
+        else 'NULL' 
+    end as Name,
+    g.grade as Grade,
+    s.marks as Marks
+from Students s
+join Grades g 
+on s.marks between g.min_mark and g.max_mark
+order by g.grade  desc, 
+         (case when g.grade >= 8 then s.name else NULL end) ASC,
+        s.marks  ASC;
