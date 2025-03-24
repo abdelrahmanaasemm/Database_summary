@@ -1,0 +1,42 @@
+what-type-of-triangle
+select case 
+     when a+b+c-greatest(a,b,c)<=greatest(a,b,c) then "Not A Tiangle"
+     when a=b and b=c then "Equilateral"
+     when a=b or b=c or a=c then "Isosceles"  
+     else "Scalene" 
+     end
+     from traingles;
+
+
+find-products-with-valid-serial-numbers
+
+# Write your MySQL query statement below
+select *from products where description like '% SN____-____ %' or description like '% SN____-____'
+
+
+
+find-students-who-improved
+
+# Write your MySQL query statement below
+with combin as(
+    select s.student_id ,s.subject as subject ,s.score as fscore ,c.score as sscore,s.exam_date  as first_date ,c.exam_date as second_date   
+    from  scores s , scores c
+    where s.student_id=c.student_id and s.subject =c.subject and c.exam_date > s.exam_date and c.score>s.score
+),
+dates as(
+    select student_id ,subject as subj,min(exam_date) as fdate,max(exam_date) as ldate
+    from scores 
+    group by student_id ,subj
+)
+select d.student_id,c.subject , fscore as first_score,sscore as latest_score
+from combin c ,dates d
+where c.student_id=d.student_id and d.fdate=c.first_date and d.ldate=c.second_date and fscore<sscore and d.subj=c.subject
+order by c.student_id,subj
+
+percentage-of-users-attended-a-contest
+
+# Write your MySQL query statement below
+select contest_id ,  (round( count(*)*100.0/(select count(*)from users),2))as percentage
+from Register
+group by contest_id
+order by percentage desc,contest_id asc 

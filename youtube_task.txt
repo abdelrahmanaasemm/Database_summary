@@ -1,0 +1,46 @@
+create database youtube 
+use youtube;
+create table users(
+userid varchar(2000)  primary key,
+username varchar(200) not null,
+useremail varchar(100)not null,
+userpass varchar(200)not null
+);
+create table videos(
+videoid varchar(2000)  primary key,
+videoname varchar(200) not null,
+videourl varchar(2000)not null,
+userid varchar(2000) not null,
+ foreign key (userid) references Users(userid)
+);
+create table Comments (
+    commentid varchar(2000) primary key ,
+    videoid varchar(2000) not null,
+    userid varchar(2000)  not null,
+    commenttext TEXT not null,
+    foreign key (videoid) references videos(videoid),
+    foreign key (userid) references users(userid) ,
+ 
+);
+create table videolikes (
+    LikeID varchar(2000)  primary key ,
+    VideoID varchar(2000) not null unique,
+    UserID varchar(2000) not null unique,
+    liketype BIT,  
+	foreign key  (videoid) references Videos(videoid) ,
+      foreign key  (userid) references Users(userid)
+);
+create table subscribtion (
+    subscribtionid varchar(2000)  primary key ,
+	subscirberid  varchar(2000),
+    channelid varchar(2000) not null unique,
+   foreign key  (channelid) references Users(userid),
+   foreign key  (subscirberid) references Users(userid)
+);
+create table playlists (
+    plid varchar(2000)  primary key,
+    userid varchar(2000) not null,
+    Name varchar(250) not null,
+    IsPublic bit DEFAULT 0,
+	foreign key  (userid) references Users(userid)
+);
